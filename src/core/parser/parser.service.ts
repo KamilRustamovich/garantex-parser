@@ -17,18 +17,19 @@ export class ParserService {
         let data = []
 
         const selector = (n: number, m: number) => `#transactions > div > div > table.table.table-condensed.table-striped.sell_table > tbody > tr:nth-child(${n}) > td:nth-child(${m})`
-        for(let i = 0; i < 10; i++) {
+        
+        for (let i = 1; i < 10; i++) {
             const sellerElement = await page.waitForSelector(selector(i, 1))
             const sellerText = await page.evaluate(element => element?.textContent, sellerElement)
 
-                const paymentMethodElement = await page.waitForSelector(selector(i, 2))
-                const paymentMethodText = await page.evaluate(element => element?.textContent, paymentMethodElement)
+            const paymentMethodElement = await page.waitForSelector(selector(i, 2))
+            const paymentMethodText = await page.evaluate(element => element?.textContent, paymentMethodElement)
 
-                const priceElement = await page.waitForSelector(selector(i, 3))
-                const priceText = await page.evaluate(element => element?.textContent, priceElement)
+            const priceElement = await page.waitForSelector(selector(i, 3))
+            const priceText = await page.evaluate(element => element?.textContent, priceElement)
 
-                const limitElement = await page.waitForSelector(selector(i, 4))
-                const limitText = await page.evaluate(element => element?.textContent, limitElement)
+            const limitElement = await page.waitForSelector(selector(i, 4))
+            const limitText = await page.evaluate(element => element?.textContent, limitElement)
                 
             data.push({
                 seller: sellerText,
@@ -37,6 +38,7 @@ export class ParserService {
                 limit: limitText
             })
         }
+
         console.log(data)
         browser.close()
      }
